@@ -2,6 +2,7 @@
 title: 'AFI ELISA Test'
 format:
   html:
+    embed-resources: true
     toc: true
 editor: visual
 ---
@@ -125,4 +126,3 @@ tbl_summary(
   label = inbios4 ~ 'IgG'
 )
 ```
-
