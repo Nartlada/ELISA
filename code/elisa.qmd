@@ -1,0 +1,128 @@
+---
+title: 'AFI ELISA Test'
+format:
+  html:
+    toc: true
+editor: visual
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE
+)
+
+# Packages
+source(here::here('code', 'libraries.R'))
+```
+
+```{r data}
+source(here('code', 'eldata.R'))
+```
+
+#### Plot 1: IgM - ROC Curve
+
+```{r rocigm}
+roc1 <- roc(df1$ifa1, df1$inbios1)
+par(pty = 's')
+plot.roc(
+  roc1,
+  plot = TRUE,
+  legacy.axes = TRUE,
+  col = '#377eb8',
+  lwd = 3,
+  print.auc = TRUE,
+  print.auc.x = .4,
+  print.thres = 'best'
+)
+```
+
+#### Table 1: IgM - Thresholds with specificity, specificity, PPV, and NPV
+
+```{r tableigm}
+coords(
+  roc1,
+  ret = c(
+    'threshold',
+    'sensitivity',
+    'specificity',
+    'ppv',
+    'npv',
+    'closest.topleft'
+  )
+) %>%
+  datatable(
+    options = list(
+      initComplete = JS("function(){$(this).addClass('compact');}"),
+      pageLength = 20,
+      order = list(list(6, 'asc')))
+  ) %>% 
+  formatRound(1:6, 5)
+```
+
+#### Plot 2: IgG - ROC Curve
+
+```{r rocigg}
+roc2 <- roc(df2$ifa2, df2$inbios2)
+par(pty = 's')
+plot.roc(
+  roc2,
+  plot = TRUE,
+  legacy.axes = TRUE,
+  col = '#377eb8',
+  lwd = 3,
+  print.auc = TRUE,
+  print.auc.x = .4,
+  print.thres = 'best'
+)
+```
+
+#### Table 2: IgG - Thresholds with specificity, specificity, PPV, and NPV
+
+```{r tableigg}
+coords(
+  roc2,
+  ret = c(
+    'threshold',
+    'sensitivity',
+    'specificity',
+    'ppv',
+    'npv',
+    'closest.topleft'
+  )
+) %>%
+  datatable(
+    options = list(
+      initComplete = JS("function(){$(this).addClass('compact');}"),
+      pageLength = 20,
+      order = list(list(6, 'asc')))
+  ) %>% 
+  formatRound(1:6, 5)
+```
+
+#### Table 3: IgM - Mean, SD only for Negative
+
+```{r meanigm}
+tbl_summary(
+  data = df3,
+  include = inbios3,
+  type = inbios3 ~ 'continuous2',
+  statistic = inbios3 ~ c('{mean}', '{sd}'),
+  label = inbios3 ~ 'IgM'
+)
+```
+
+#### Table 4: IgG - Mean, SD only for Negative
+
+```{r meanigg}
+tbl_summary(
+  data = df4,
+  include = inbios4,
+  type = inbios4 ~ 'continuous2',
+  statistic = inbios4 ~ c('{mean}', '{sd}'),
+  label = inbios4 ~ 'IgG'
+)
+```
+

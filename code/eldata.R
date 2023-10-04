@@ -1,8 +1,3 @@
-pacman::p_load(rio,
-               here,
-               tidyverse,
-               janitor)
-
 df1 <-
   import(here(
     'data',
@@ -12,7 +7,8 @@ df1 <-
   clean_names() %>%
   rename(desc1 = description_ig_m,
          ifa1 = ifa_stg_ig_m_interpret,
-         inbios1 = inbios_od_scrub_m)
+         inbios1 = inbios_od_scrub_m) %>% 
+  mutate(ifa1 = ifelse(ifa1 == 'pos', 1, 0))
 
 df2 <-
   import(here(
@@ -23,7 +19,8 @@ df2 <-
   clean_names() %>%
   rename(desc2 = description_for_ig_g1,
          ifa2 = interpret_st_ig_g_ifa,
-         inbios2 = inbios_od_scrub_g_acute)
+         inbios2 = inbios_od_scrub_g_acute) %>% 
+  mutate(ifa2 = ifelse(ifa2 == 'Pos', 1, 0))
 
 df3 <-
   import(here(
