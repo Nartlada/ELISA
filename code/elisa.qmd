@@ -55,11 +55,23 @@ coords(
   )
 ) %>%
   datatable(
+    extensions = 'Buttons',
     options = list(
       initComplete = JS("function(){$(this).addClass('compact');}"),
       pageLength = 20,
-      order = list(list(6, 'asc')))
-  ) %>% 
+      order = list(6, 'asc'),
+      dom = 'Blfrtip',
+      buttons = list(
+        'copy',
+        'print',
+        list(
+          extend = 'collection',
+          buttons = c('csv', 'excel', 'pdf'),
+          text = 'Download'
+        )
+      )
+    )
+  ) %>%
   formatRound(1:6, 5)
 ```
 
@@ -95,11 +107,23 @@ coords(
   )
 ) %>%
   datatable(
+    extensions = 'Buttons',
     options = list(
       initComplete = JS("function(){$(this).addClass('compact');}"),
       pageLength = 20,
-      order = list(list(6, 'asc')))
-  ) %>% 
+      order = list(6, 'asc'),
+      dom = 'Blfrtip',
+      buttons = list(
+        'copy',
+        'print',
+        list(
+          extend = 'collection',
+          buttons = c('csv', 'excel', 'pdf'),
+          text = 'Download'
+        )
+      )
+    )
+  ) %>%
   formatRound(1:6, 5)
 ```
 
